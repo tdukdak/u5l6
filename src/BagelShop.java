@@ -71,6 +71,13 @@ public class BagelShop
      */
     public boolean returnBagels(CreditCard card, int quantity, String cardPIN)
     {
+        int total = bagelPrice * quantity;
+        if(card.checkPIN(cardPIN)){
+            card.reduceBalance(total);
+            profit -= total;
+            inventory -= quantity;
+            return true;
+        }
         return false;
     }
 
@@ -79,7 +86,8 @@ public class BagelShop
      */
     public void depositProfits()
     {
-        // TO BE IMPLEMENTED
+        vendorBank.vendorDeposit(profit);
+        profit = 0;
     }
 
     public String toString()
